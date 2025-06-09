@@ -1,8 +1,12 @@
-package main
+package repl
 
-import "fmt"
+import (
+	"fmt"
 
-func commandHelp() error {
+	"github.com/vemolista/pokedex-cli/internal/poke_api"
+)
+
+func commandHelp(config *poke_api.Config) error {
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")
 	fmt.Println("")
