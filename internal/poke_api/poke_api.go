@@ -43,10 +43,7 @@ func (c *Client) GetLocationAreas(url *string) (LocationAreasResponse, error) {
 		return LocationAreasResponse{}, fmt.Errorf("error creating request: %w", err)
 	}
 
-	client := &http.Client{
-		Timeout: 5 * time.Second,
-	}
-	res, err := client.Do(req)
+	res, err := c.httpClient.Do(req)
 	if err != nil {
 		return LocationAreasResponse{}, fmt.Errorf("error requesting: %w", err)
 	}
