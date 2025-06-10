@@ -3,11 +3,9 @@ package repl
 import (
 	"fmt"
 	"os"
-
-	"github.com/vemolista/pokedex-cli/internal/poke_api"
 )
 
-func commandExit(config *poke_api.Config) error {
+func commandExit(cfg *Config) error {
 	fmt.Println("Closing the Pokedex... Goodbye!")
 	os.Exit(0)
 

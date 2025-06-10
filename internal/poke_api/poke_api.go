@@ -11,19 +11,31 @@ import (
 const baseUrl = "https://pokeapi.co/api/v2/"
 
 type LocationAreasResponse struct {
-	Count    int    `json:"count"`
-	Next     string `json:"next"`
-	Previous string `json:"previous"`
+	Count    int     `json:"count"`
+	Next     *string `json:"next"`
+	Previous *string `json:"previous"`
 	Results  []struct {
 		Name string `json:"name"`
 		URL  string `json:"url"`
 	} `json:"results"`
 }
 
-func GetLocationAreas(url string) (LocationAreasResponse, error) {
+func (c *Client) GetLocationAreas(url *string) (LocationAreasResponse, error) {
 	fullUrl := baseUrl + "location-area/"
-	if url != "" {
-		fullUrl = url
+	if url != nil {
+		fullUrl = *url
+	}
+
+	i, ok := c.cache.Get(fullUrl)
+	if ok {
+		var locationAreasResponse LocationAreasResponse
+		err := json.Unmarshal(i, &locationAreasResponse)
+
+		if err != nil {
+			return LocationAreasResponse{}, fmt.Errorf("error unmarshalling response body: %w", err)
+		}
+
+		return locationAreasResponse, nil
 	}
 
 	req, err := http.NewRequest("GET", fullUrl, nil)
@@ -48,6 +60,8 @@ func GetLocationAreas(url string) (LocationAreasResponse, error) {
 	if err != nil {
 		return LocationAreasResponse{}, fmt.Errorf("error reading response body: %w", err)
 	}
+
+	c.cache.Add(fullUrl, body)
 
 	var locationAreasResponse LocationAreasResponse
 	err = json.Unmarshal(body, &locationAreasResponse)

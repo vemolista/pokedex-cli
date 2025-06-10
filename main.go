@@ -1,7 +1,16 @@
 package main
 
-import "github.com/vemolista/pokedex-cli/internal/repl"
+import (
+	"time"
+
+	"github.com/vemolista/pokedex-cli/internal/poke_api"
+	"github.com/vemolista/pokedex-cli/internal/repl"
+)
 
 func main() {
-	repl.StartRepl()
+	pokeClient := poke_api.NewClient(5*time.Second, 5*time.Minute)
+
+	cfg := &repl.Config{PokeClient: pokeClient}
+
+	repl.StartRepl(cfg)
 }

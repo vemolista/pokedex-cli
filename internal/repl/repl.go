@@ -9,10 +9,15 @@ import (
 	"github.com/vemolista/pokedex-cli/internal/poke_api"
 )
 
-func StartRepl() {
+type Config struct {
+	PokeClient           poke_api.Client
+	nextLocationsUrl     *string
+	previousLocationsUrl *string
+}
+
+func StartRepl(cfg *Config) {
 	scanner := bufio.NewScanner(os.Stdin)
 
-	var config poke_api.Config
 	for {
 		fmt.Print("Pokedex > ")
 		scanner.Scan()
@@ -24,7 +29,7 @@ func StartRepl() {
 			fmt.Print("Unknown command.")
 		}
 
-		err := i.callback(&config)
+		err := i.callback(cfg)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -39,7 +44,7 @@ func cleanInput(text string) []string {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(config *poke_api.Config) error
+	callback    func(*Config) error
 }
 
 func getCommands() map[string]cliCommand {
