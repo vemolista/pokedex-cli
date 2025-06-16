@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func commandMap(cfg *Config) error {
+func commandMap(cfg *Config, arg string) error {
 	areas, err := cfg.PokeClient.GetLocationAreas(cfg.nextLocationsUrl)
 
 	if err != nil {
@@ -21,7 +21,7 @@ func commandMap(cfg *Config) error {
 	return nil
 }
 
-func commandMapBack(cfg *Config) error {
+func commandMapBack(cfg *Config, arg string) error {
 	areas, err := cfg.PokeClient.GetLocationAreas(cfg.previousLocationsUrl)
 
 	if err != nil {

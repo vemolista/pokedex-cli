@@ -7,8 +7,6 @@ import (
 	"net/http"
 )
 
-const baseUrl = "https://pokeapi.co/api/v2/"
-
 type ShallowLocationAreasResponse struct {
 	Count    int     `json:"count"`
 	Next     *string `json:"next"`
@@ -20,7 +18,7 @@ type ShallowLocationAreasResponse struct {
 }
 
 func (c *Client) GetLocationAreas(url *string) (ShallowLocationAreasResponse, error) {
-	fullUrl := baseUrl + "location-area/"
+	fullUrl := BaseUrl + "location-area/"
 	if url != nil {
 		fullUrl = *url
 	}

@@ -7,6 +7,8 @@ import (
 	"github.com/vemolista/pokedex-cli/internal/poke_cache"
 )
 
+const BaseUrl = "https://pokeapi.co/api/v2/"
+
 type Client struct {
 	cache      poke_cache.Cache
 	httpClient http.Client
