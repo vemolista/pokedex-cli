@@ -26,7 +26,10 @@ func StartRepl(cfg *Config) {
 
 		i, ok := getCommands()[command]
 		if !ok {
-			fmt.Print("Unknown command.")
+			fmt.Printf("Unknown command '%s'.\n", input)
+			fmt.Println("Type 'help' for a list of available commands.")
+
+			continue
 		}
 
 		err := i.callback(cfg)
