@@ -1,6 +1,6 @@
 # pokedex-cli
 
-A Pokemon CLI app.
+A Pokemon CLI app. A guided project that's part of the BE curriculum at [boot.dev](boot.dev).
 
 ## Usage
 Run the project with
