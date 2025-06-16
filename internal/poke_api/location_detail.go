@@ -63,17 +63,17 @@ type LocationAreaResponse struct {
 func (c *Client) GetLocationDetails(locationArea string) (LocationAreaResponse, error) {
 	url := BaseUrl + "location-area/" + locationArea
 
-	// i, ok := c.cache.Get(url)
-	// if ok {
-	// 	var locationAreasResponse ShallowLocationAreasResponse
-	// 	err := json.Unmarshal(i, &locationAreasResponse)
+	i, ok := c.cache.Get(url)
+	if ok {
+		var locationAreaResponse LocationAreaResponse
+		err := json.Unmarshal(i, &locationAreaResponse)
 
-	// 	if err != nil {
-	// 		return ShallowLocationAreasResponse{}, fmt.Errorf("error unmarshalling response body: %w", err)
-	// 	}
+		if err != nil {
+			return LocationAreaResponse{}, fmt.Errorf("error unmarshalling response body: %w", err)
+		}
 
-	// 	return locationAreasResponse, nil
-	// }
+		return locationAreaResponse, nil
+	}
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
